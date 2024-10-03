@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useCountriesStore = defineStore('countries', {
   state: () => ({
     countries: [] as any[],
+    regions: [] as any[],
     loading: false,
     error: null as string | null,
   }),
@@ -15,8 +16,18 @@ export const useCountriesStore = defineStore('countries', {
       this.loading = true
       try {
         this.countries = await apiRequest(
-          'https://restcountries.com/v3.1/all?fields=name,flags'
+          'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital'
         )
+        if (this.countries) {
+          const regions = [
+            ...new Set(this.countries.map((country) => country.region)),
+          ]
+
+          this.regions = regions.map((region) => ({
+            value: region,
+            label: region,
+          }))
+        }
         console.log('jestem')
       } catch (error) {
         this.error = 'Failed to fetch countries'

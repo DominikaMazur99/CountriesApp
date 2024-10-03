@@ -1,10 +1,13 @@
 <template>
-  <div class="topbar-container">
+  <div :class="['topbar-container', { 'dark-mode': darkMode }]">
     <div class="topbar-box">
-      <span class="topbar-box__name">Where in the world?</span>
+      <span :class="['topbar-box__name']">Where in the world?</span>
       <div class="topbar-box__mode">
-        <v-icon width="20" height="20" fill="#000000" name="bi-moon" />
-        <span>Dark Mode</span>
+        <div class="switch-mode__btn" @click="$emit('toggle-dark-mode')">
+          <v-icon width="16" height="16" name="fa-moon" />
+          <span v-if="darkMode">Light Mode</span>
+          <span v-else>Dark Mode</span>
+        </div>
       </div>
     </div>
   </div>
@@ -15,6 +18,12 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'TopBar',
+  props: {
+    darkMode: {
+      type: Boolean,
+      required: true,
+    },
+  },
 })
 </script>
 
@@ -28,9 +37,14 @@ export default defineComponent({
   top: 0;
   left: 0;
   right: 0;
+  color: #000000;
   @media (max-width: 768px) {
     padding: 12px 30px;
   }
+}
+.dark-mode {
+  background-color: #2e3742;
+  color: #ffffff;
 }
 .topbar-box {
   display: flex;
@@ -40,15 +54,24 @@ export default defineComponent({
   height: 100%;
 }
 .topbar-box__name {
-  font-size: 16px;
+  font-size: 24px;
   font-weight: bold;
   line-height: 1.2;
-  color: #000000;
 }
 .topbar-box__mode {
   display: flex;
   justify-content: space-between;
   gap: 2px;
   align-items: center;
+}
+.switch-mode__btn {
+  border: none;
+  background-color: none;
+  padding: 12px;
+  align-items: center;
+}
+.switch-mode__btn:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 </style>

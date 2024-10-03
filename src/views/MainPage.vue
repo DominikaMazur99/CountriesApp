@@ -1,12 +1,16 @@
 <template>
   <div class="page-container">
-    <TopBar />
-    <div class="main-container">
+    <TopBar @toggle-dark-mode="toggleDarkMode" :darkMode="isDarkMode" />
+    <div :class="['main-container', { 'dark-mode__main': isDarkMode }]">
       <div class="main-container__box">
         <div class="inputs-box">
-          <SearchInput />
+          <SearchInput :darkMode="isDarkMode" />
           <div></div>
-          <SelectInput v-model="selectedOption" :options="countryOptions" />
+          <SelectInput
+            v-model="selectedOption"
+            :options="regions"
+            :darkMode="isDarkMode"
+          />
         </div>
         <div class="countries-cards">
           <CountryCard
@@ -14,6 +18,10 @@
             :key="country.cca3"
             :flagUrl="country.flags.png"
             :countryName="country.name.common"
+            :populationValue="country.population"
+            :capitalCity="country.capital[0]"
+            :region="country.region"
+            :darkMode="isDarkMode"
           />
         </div>
       </div>
@@ -37,25 +45,39 @@ export default defineComponent({
     SelectInput,
     CountryCard,
   },
+  methods: {
+    formatPopulationValue(value: number) {
+      return value.toLocaleString('en-US')
+    },
+  },
   setup() {
     const selectedOption = ref<string>('')
-    const countryOptions: { value: string; label: string }[] = [
-      { value: '', label: '' },
-      { value: 'us', label: 'United States' },
-      { value: 'pl', label: 'Poland' },
-      { value: 'de', label: 'Germany' },
-    ]
     const countriesStore = useCountriesStore()
+    const isDarkMode = ref(localStorage.getItem('darkMode') === 'on')
+
+    const toggleDarkMode = () => {
+      isDarkMode.value = !isDarkMode.value
+      localStorage.setItem('darkMode', isDarkMode.value ? 'on' : 'off')
+    }
+
     onMounted(() => {
+      if (localStorage.getItem('darkMode') === 'on') {
+        isDarkMode.value = true
+      } else {
+        isDarkMode.value = false
+      }
       countriesStore.fetchCountries()
     })
 
     const countries = computed(() => countriesStore.countries)
+    const regions = computed(() => countriesStore.regions)
 
     return {
       selectedOption,
-      countryOptions,
       countries: countries,
+      regions: regions,
+      toggleDarkMode,
+      isDarkMode,
     }
   },
 })
@@ -71,6 +93,10 @@ export default defineComponent({
   background-color: #fafafa;
   overflow-x: hidden;
   overflow-y: auto;
+}
+.dark-mode__main {
+  background-color: #232c35;
+  color: #ffffff;
 }
 .main-container__box {
   padding: 50px 60px 0 60px;

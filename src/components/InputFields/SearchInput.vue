@@ -1,5 +1,10 @@
 <template>
-  <div class="search-input__container">
+  <div
+    :class="[
+      'search-input__container',
+      { 'dark-mode-input__container': darkMode },
+    ]"
+  >
     <v-icon
       class="search-icon"
       width="20"
@@ -7,7 +12,10 @@
       name="hi-solid-search"
       color="gray"
     />
-    <input class="search-input" placeholder="Search for a country..." />
+    <input
+      :class="['search-input', { 'dark-mode__input': darkMode }]"
+      placeholder="Search for a country..."
+    />
   </div>
 </template>
 
@@ -16,21 +24,15 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'SearchInput',
+  props: {
+    darkMode: {
+      type: Boolean,
+      required: true,
+    },
+  },
 })
 </script>
 
 <style scoped>
 @import '../styles/styles.css';
-
-.search-input {
-  padding: 16px;
-  border: none;
-  font-size: 16px;
-  outline: none;
-}
-
-.search-input:focus {
-  border-color: transparent;
-  box-shadow: none;
-}
 </style>

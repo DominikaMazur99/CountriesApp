@@ -1,12 +1,15 @@
 <template>
   <div class="select-input__container" ref="dropdownContainer">
     <div
-      class="search-input__container"
+      :class="[
+        'search-input__container',
+        { 'dark-mode-input__container': darkMode },
+      ]"
       style="justify-content: space-between"
       @click="toggleDropdown"
     >
       <input
-        class="search-input"
+        :class="['search-input', { 'dark-mode__input': darkMode }]"
         :placeholder="placeholder"
         v-model="searchQuery"
         @focus="isOpen = true"
@@ -60,6 +63,10 @@ export default defineComponent({
     modelValue: {
       type: String,
       default: '',
+    },
+    darkMode: {
+      type: Boolean,
+      required: true,
     },
   },
   emits: ['update:modelValue'],
@@ -144,11 +151,6 @@ export default defineComponent({
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
-}
-
-.clean-list {
-  list-style-type: none;
-  padding-left: 0;
 }
 
 .option-item {

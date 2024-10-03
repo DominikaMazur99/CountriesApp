@@ -10,6 +10,11 @@
   height: 25px;
 }
 
+.dark-mode-input__container {
+  background-color: #2e3742;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .search-icon {
   pointer-events: none;
 }
@@ -22,7 +27,17 @@
   color: gray;
 }
 
+.dark-mode__input {
+  color: #ffffff;
+  background-color: #2e3742;
+}
+
 .search-input:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dark-mode__input:focus {
   border-color: transparent;
   box-shadow: none;
 }
@@ -30,4 +45,25 @@
 .search-input::placeholder {
   color: gray;
   opacity: 1;
+}
+
+.dark-mode__input::placeholder {
+  color: #ffffff;
+  opacity: 1;
+}
+
+.clean-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.clean-list__card {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clean-list__card li {
+  margin-bottom: 20px;
+  text-align: left;
 }
