@@ -1,6 +1,10 @@
 <template>
   <div class="select-input__container" ref="dropdownContainer">
-    <div class="search-input__container" @click="toggleDropdown">
+    <div
+      class="search-input__container"
+      style="justify-content: space-between"
+      @click="toggleDropdown"
+    >
       <input
         class="search-input"
         :placeholder="placeholder"
@@ -9,7 +13,6 @@
       />
       <v-icon
         class="search-icon"
-        style="margin-right: 0"
         width="20"
         height="20"
         name="md-keyboardarrowdown-sharp"

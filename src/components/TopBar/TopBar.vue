@@ -29,6 +29,9 @@ export default defineComponent({
   left: 0;
   right: 0;
   z-index: 99;
+  @media (max-width: 768px) {
+    padding: 12px 30px;
+  }
 }
 .topbar-box {
   display: flex;

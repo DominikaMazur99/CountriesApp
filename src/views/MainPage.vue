@@ -45,9 +45,13 @@ export default defineComponent({
 .main-container {
   height: calc(100% - 50px);
   background-color: #fafafa;
+  overflow: hidden;
 }
 .main-container__box {
   padding: 100px 60px 0 60px;
+  @media (max-width: 768px) {
+    padding: 100px 30px 0 30px;
+  }
 }
 
 .inputs-box {
@@ -55,5 +59,10 @@ export default defineComponent({
   grid-template-columns: 2fr 1fr auto;
   gap: 20px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 </style>
