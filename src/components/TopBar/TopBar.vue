@@ -24,11 +24,10 @@ export default defineComponent({
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   background-color: #ffffff;
   height: 50px;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 99;
   @media (max-width: 768px) {
     padding: 12px 30px;
   }

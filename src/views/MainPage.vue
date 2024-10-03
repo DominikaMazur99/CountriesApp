@@ -1,21 +1,33 @@
 <template>
-  <TopBar />
-  <div class="main-container">
-    <div class="main-container__box">
-      <div class="inputs-box">
-        <SearchInput />
-        <div></div>
-        <SelectInput v-model="selectedOption" :options="countryOptions" />
+  <div class="page-container">
+    <TopBar />
+    <div class="main-container">
+      <div class="main-container__box">
+        <div class="inputs-box">
+          <SearchInput />
+          <div></div>
+          <SelectInput v-model="selectedOption" :options="countryOptions" />
+        </div>
+        <div class="countries-cards">
+          <CountryCard
+            v-for="country in countries"
+            :key="country.cca3"
+            :flagUrl="country.flags.png"
+            :countryName="country.name.common"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
+import CountryCard from '../components/CountryCard/CountryCard.vue'
 import SearchInput from '../components/InputFields/SearchInput.vue'
 import SelectInput from '../components/InputFields/SelectInput.vue'
 import TopBar from '../components/TopBar/TopBar.vue'
+import { useCountriesStore } from '../stores/countriesStore'
 
 export default defineComponent({
   name: 'MainPageView',
@@ -23,6 +35,7 @@ export default defineComponent({
     TopBar,
     SearchInput,
     SelectInput,
+    CountryCard,
   },
   setup() {
     const selectedOption = ref<string>('')
@@ -32,37 +45,67 @@ export default defineComponent({
       { value: 'pl', label: 'Poland' },
       { value: 'de', label: 'Germany' },
     ]
+    const countriesStore = useCountriesStore()
+    onMounted(() => {
+      countriesStore.fetchCountries()
+    })
+
+    const countries = computed(() => countriesStore.countries)
 
     return {
       selectedOption,
       countryOptions,
+      countries: countries,
     }
   },
 })
 </script>
 
 <style scoped>
+.page-container {
+  display: grid;
+  grid-template-rows: 50px auto;
+  height: 100vh;
+}
 .main-container {
-  height: calc(100% - 50px);
   background-color: #fafafa;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .main-container__box {
-  padding: 100px 60px 0 60px;
+  padding: 50px 60px 0 60px;
   @media (max-width: 768px) {
-    padding: 100px 30px 0 30px;
+    padding: 50px 30px 0 30px;
   }
 }
 
 .inputs-box {
   display: grid;
-  grid-template-columns: 2fr 1fr auto;
+  grid-template-columns: 0.75fr 1fr auto;
   gap: 20px;
   width: 100%;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+}
+.countries-cards {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 </style>
