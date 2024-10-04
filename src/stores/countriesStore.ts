@@ -1,4 +1,3 @@
-import { apiRequest } from '@/utils/api' // Import reużywalnej funkcji
 import { defineStore } from 'pinia'
 
 export const useCountriesStore = defineStore('countries', {
@@ -15,20 +14,19 @@ export const useCountriesStore = defineStore('countries', {
 
       this.loading = true
       try {
-        this.countries = await apiRequest(
+        const response = await fetch(
           'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital'
         )
+        this.countries = await response.json()
         if (this.countries) {
           const regions = [
             ...new Set(this.countries.map((country) => country.region)),
           ]
-
           this.regions = regions.map((region) => ({
             value: region,
             label: region,
           }))
         }
-        console.log('jestem')
       } catch (error) {
         this.error = 'Failed to fetch countries'
       } finally {
@@ -42,6 +40,13 @@ export const useCountriesStore = defineStore('countries', {
       return (region: string) => {
         return state.countries.filter((country) =>
           country.region.toLowerCase().includes(region.toLowerCase())
+        )
+      }
+    },
+    getCountriesByName: (state) => {
+      return (name: string) => {
+        return state.countries.filter((country) =>
+          country.name.common.toLowerCase().includes(name.toLowerCase())
         )
       }
     },

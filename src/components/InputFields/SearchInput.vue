@@ -10,17 +10,18 @@
       width="20"
       height="20"
       name="hi-solid-search"
-      color="gray"
+      :style="{ color: darkMode ? 'white' : 'gray' }"
     />
     <input
       :class="['search-input', { 'dark-mode__input': darkMode }]"
       placeholder="Search for a country..."
+      v-model="searchValue"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'SearchInput',
@@ -29,6 +30,22 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+    modelValue: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ['update:modelValue'],
+  setup(props, { emit }) {
+    const searchValue = ref(props.modelValue)
+
+    watch(searchValue, (newValue) => {
+      emit('update:modelValue', newValue)
+    })
+
+    return {
+      searchValue,
+    }
   },
 })
 </script>

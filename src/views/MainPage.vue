@@ -1,11 +1,12 @@
 <template>
-  <div class="page-container">
+  <div :class="['page-container', { 'dark-mode': isDarkMode }]">
     <TopBar @toggle-dark-mode="toggleDarkMode" :darkMode="isDarkMode" />
     <div :class="['main-container', { 'dark-mode__main': isDarkMode }]">
       <div class="main-container__box">
         <div class="inputs-box">
-          <SearchInput :darkMode="isDarkMode" />
-          <div></div>
+          <!-- SearchInput dla filtrowania po nazwie kraju -->
+          <SearchInput v-model="searchTerm" :darkMode="isDarkMode" />
+          <!-- SelectInput dla filtrowania po regionie -->
           <SelectInput
             v-model="selectedOption"
             :options="regions"
@@ -13,8 +14,9 @@
           />
         </div>
         <div class="countries-cards">
+          <!-- Wyświetlanie przefiltrowanych krajów -->
           <CountryCard
-            v-for="country in countries"
+            v-for="country in filteredCountries"
             :key="country.cca3"
             :flagUrl="country.flags.png"
             :countryName="country.name.common"
@@ -45,13 +47,9 @@ export default defineComponent({
     SelectInput,
     CountryCard,
   },
-  methods: {
-    formatPopulationValue(value: number) {
-      return value.toLocaleString('en-US')
-    },
-  },
   setup() {
-    const selectedOption = ref<string>('')
+    const selectedOption = ref<string>('') // Wybrany region
+    const searchTerm = ref<string>('') // Wartość wyszukiwania
     const countriesStore = useCountriesStore()
     const isDarkMode = ref(localStorage.getItem('darkMode') === 'on')
 
@@ -69,13 +67,24 @@ export default defineComponent({
       countriesStore.fetchCountries()
     })
 
-    const countries = computed(() => countriesStore.countries)
+    // Filtrowanie krajów według nazwy lub regionu
+    const filteredCountries = computed(() => {
+      if (selectedOption.value) {
+        return countriesStore.getCountriesByRegion(selectedOption.value)
+      } else if (searchTerm.value) {
+        return countriesStore.getCountriesByName(searchTerm.value)
+      } else {
+        return countriesStore.countries // Wyświetl wszystkie kraje, jeśli nic nie jest wybrane
+      }
+    })
+
     const regions = computed(() => countriesStore.regions)
 
     return {
       selectedOption,
-      countries: countries,
-      regions: regions,
+      searchTerm,
+      filteredCountries,
+      regions,
       toggleDarkMode,
       isDarkMode,
     }

@@ -3,7 +3,10 @@
     <div class="topbar-box">
       <span :class="['topbar-box__name']">Where in the world?</span>
       <div class="topbar-box__mode">
-        <div class="switch-mode__btn" @click="$emit('toggle-dark-mode')">
+        <div
+          :class="['switch-mode__btn', { 'switch-mode__dark': darkMode }]"
+          @click="$emit('toggle-dark-mode')"
+        >
           <v-icon width="16" height="16" name="fa-moon" />
           <span v-if="darkMode">Light Mode</span>
           <span v-else>Dark Mode</span>
@@ -73,5 +76,12 @@ export default defineComponent({
 .switch-mode__btn:hover {
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.switch-mode__dark:hover {
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(255, 255, 255, 0.08);
+  background-color: 0 4px 6px rgba(255, 255, 255, 0.1),
+    0 2px 4px rgba(255, 255, 255, 0.08);
 }
 </style>

@@ -19,7 +19,7 @@
         width="20"
         height="20"
         name="md-keyboardarrowdown-sharp"
-        color="gray"
+        :style="{ color: darkMode ? 'white' : 'gray' }"
         @click="toggleDropdown"
       />
     </div>
