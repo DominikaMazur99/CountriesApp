@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 export const useCountriesStore = defineStore('countries', {
   state: () => ({
     countries: [] as any[],
+    selectedCountry: null as any | null,
     regions: [] as any[],
     loading: false,
     error: null as string | null,
@@ -15,8 +16,9 @@ export const useCountriesStore = defineStore('countries', {
       this.loading = true
       try {
         const response = await fetch(
-          'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital'
+          'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,subregion,tld,currencies,languages,borders'
         )
+
         this.countries = await response.json()
         if (this.countries) {
           const regions = [
@@ -32,6 +34,9 @@ export const useCountriesStore = defineStore('countries', {
       } finally {
         this.loading = false
       }
+    },
+    setSelectedCountry(country: any) {
+      this.selectedCountry = country
     },
   },
 

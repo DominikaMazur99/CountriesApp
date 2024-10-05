@@ -5,13 +5,14 @@ import router from './router'
 
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import {
+  BiArrowLeft,
   BiMoon,
   FaMoon,
   HiSolidSearch,
   MdKeyboardarrowdownSharp,
 } from 'oh-vue-icons/icons'
 
-addIcons(BiMoon, FaMoon, HiSolidSearch, MdKeyboardarrowdownSharp)
+addIcons(BiMoon, FaMoon, HiSolidSearch, MdKeyboardarrowdownSharp, BiArrowLeft)
 
 const app = createApp(App)
 const pinia = createPinia()

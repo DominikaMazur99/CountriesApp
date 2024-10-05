@@ -24,6 +24,21 @@
             :capitalCity="country.capital[0]"
             :region="country.region"
             :darkMode="isDarkMode"
+            @click="
+              handleShowDetails({
+                flagUrl: country?.flags.png,
+                countryName: country?.name.common,
+                populationValue: country?.population,
+                capitalCity: country?.capital[0],
+                region: country?.region,
+                nativeName: country?.name.official,
+                subRegion: country?.subRegion,
+                topLevelDomain: country?.tld[0],
+                currencies: Object.keys(country.currencies)[0],
+                languages: Object.values(country.languages).join(', '),
+              })
+            "
+            class="countries-cards__details"
           />
         </div>
       </div>
@@ -33,6 +48,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import CountryCard from '../components/CountryCard/CountryCard.vue'
 import SearchInput from '../components/InputFields/SearchInput.vue'
 import SelectInput from '../components/InputFields/SelectInput.vue'
@@ -48,9 +64,10 @@ export default defineComponent({
     CountryCard,
   },
   setup() {
-    const selectedOption = ref<string>('') // Wybrany region
-    const searchTerm = ref<string>('') // Wartość wyszukiwania
+    const selectedOption = ref<string>('')
+    const searchTerm = ref<string>('')
     const countriesStore = useCountriesStore()
+    const router = useRouter()
     const isDarkMode = ref(localStorage.getItem('darkMode') === 'on')
 
     const toggleDarkMode = () => {
@@ -80,6 +97,25 @@ export default defineComponent({
 
     const regions = computed(() => countriesStore.regions)
 
+    interface IDetails {
+      flagUrl: string
+      countryName: string
+      populationValue: number
+      capitalCity: string
+      region: string
+      nativeName: string
+      subRegion: string
+      topLevelDomain: string
+      currencies: string
+      languages: string
+    }
+
+    const handleShowDetails = (details: IDetails) => {
+      countriesStore.setSelectedCountry(details)
+
+      router.push({ name: 'detailsView' })
+    }
+
     return {
       selectedOption,
       searchTerm,
@@ -87,6 +123,7 @@ export default defineComponent({
       regions,
       toggleDarkMode,
       isDarkMode,
+      handleShowDetails,
     }
   },
 })
@@ -142,5 +179,8 @@ export default defineComponent({
   @media (min-width: 1200px) {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+.countries-cards__details:hover {
+  cursor: pointer;
 }
 </style>
