@@ -23,6 +23,14 @@
           </ul>
         </div>
       </div>
+      <div class="borders-section">
+        <h3>Border Countries:</h3>
+        <div class="borders-buttons">
+          <div v-for="border in borderCountries" :key="border">
+            <button class="border-button">{{ border }}</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +78,10 @@ export default defineComponent({
       required: true,
     },
     languages: {
+      type: String,
+      required: true,
+    },
+    borderCountries: {
       type: Array,
       required: true,
     },
@@ -126,5 +138,35 @@ export default defineComponent({
 .details-box {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+/* Stylowanie przycisków dla krajów graniczących */
+.borders-section {
+  margin-top: 20px;
+}
+
+.borders-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.border-button {
+  padding: 5px 15px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 14px;
+}
+
+.border-button:hover {
+  background-color: #e0e0e0;
+}
+
+.border-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 </style>

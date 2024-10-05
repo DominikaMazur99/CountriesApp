@@ -32,10 +32,11 @@
                 capitalCity: country?.capital[0],
                 region: country?.region,
                 nativeName: country?.name.official,
-                subRegion: country?.subRegion,
+                subRegion: country?.subregion,
                 topLevelDomain: country?.tld[0],
                 currencies: Object.keys(country.currencies)[0],
                 languages: Object.values(country.languages).join(', '),
+                borderCountries: country.borders,
               })
             "
             class="countries-cards__details"
@@ -108,6 +109,7 @@ export default defineComponent({
       topLevelDomain: string
       currencies: string
       languages: string
+      borderCountries: any
     }
 
     const handleShowDetails = (details: IDetails) => {

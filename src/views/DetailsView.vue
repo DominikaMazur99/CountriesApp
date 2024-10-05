@@ -5,7 +5,7 @@
       <div class="main-container__box">
         <div class="details-box">
           <div class="back-btn__container">
-            <button class="back-btn">
+            <button class="back-btn" @click="handleBack">
               <v-icon
                 class="back-btn__icon"
                 width="16"
@@ -28,6 +28,7 @@
               :topLevelDomain="selectedCountry.topLevelDomain"
               :currencies="selectedCountry.currencies"
               :languages="selectedCountry.languages"
+              :borderCountries="selectedCountry.borderCountries || []"
               :darkMode="isDarkMode"
             />
           </div>
@@ -38,6 +39,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
 import { useCountriesStore } from '@/stores/countriesStore'
 import { defineComponent, onMounted, ref } from 'vue'
 import CountryDetails from '../components/CountryDetails/CountryDetails.vue'
@@ -58,6 +60,11 @@ export default defineComponent({
       localStorage.setItem('darkMode', isDarkMode.value ? 'on' : 'off')
     }
 
+    const handleBack = () => {
+      router.push({ name: 'mainPage' })
+      countriesStore.setSelectedCountry(null)
+    }
+
     onMounted(() => {
       if (localStorage.getItem('darkMode') === 'on') {
         isDarkMode.value = true
@@ -72,6 +79,7 @@ export default defineComponent({
       toggleDarkMode,
       isDarkMode,
       selectedCountry,
+      handleBack,
     }
   },
 })
@@ -115,6 +123,10 @@ export default defineComponent({
   padding: 2px 8px;
   min-width: 150px;
   color: #000000;
+}
+
+.back-btn:hover {
+  cursor: pointer;
 }
 
 .details-box {
