@@ -1,6 +1,9 @@
 <template>
-  <div :class="['details-container', { 'details-container': darkMode }]">
-    <img :src="flagUrl" alt="Country flag" class="details-container__image" />
+  <div :class="['details-container', { 'dark-mode__card': darkMode }]">
+    <div>
+      <img :src="flagUrl" alt="Country flag" class="details-container__image" />
+    </div>
+
     <div class="card-container__details">
       <div>
         <h1>{{ countryName }}</h1>
@@ -94,53 +97,43 @@ export default defineComponent({
 </script>
 
 <style scoped>
-@import '../styles/styles.css';
-
 .details-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: center;
   width: 100%;
-  height: 100%;
 }
 
-.dark-mode__card {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
-  background-color: #2e3742;
-}
-
-.card-container__image {
+.details-container__image {
   width: 100%;
-  object-fit: cover;
-  height: 100%;
-}
-
-.card-container__description {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  text-align: center;
+  max-width: 400px;
+  margin-bottom: 30px;
 }
 
 .card-container__details {
-  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+.details-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
 }
 
 .clean-list__card {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .clean-list__card li {
   margin-bottom: 10px;
 }
-.details-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
 
-/* Stylowanie przycisków dla krajów graniczących */
 .borders-section {
   margin-top: 20px;
 }
@@ -165,8 +158,25 @@ export default defineComponent({
   background-color: #e0e0e0;
 }
 
-.border-button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.back-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.back-btn__icon {
+  margin-right: 8px;
 }
 </style>
