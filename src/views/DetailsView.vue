@@ -5,7 +5,10 @@
       <div class="main-container__box">
         <div class="details-box">
           <div class="back-btn__container">
-            <button class="back-btn" @click="handleBack">
+            <button
+              :class="['back-btn', { 'back-btn__dark': isDarkMode }]"
+              @click="handleBack"
+            >
               <v-icon
                 class="back-btn__icon"
                 width="16"
@@ -130,6 +133,12 @@ export default defineComponent({
   padding: 2px 8px;
   min-width: 150px;
   color: #000000;
+}
+
+.back-btn__dark {
+  color: #ffffff;
+  background-color: #2e3742;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .back-btn:hover {

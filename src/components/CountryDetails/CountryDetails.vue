@@ -30,7 +30,10 @@
         <h3>Border Countries:</h3>
         <div class="borders-buttons">
           <div v-for="border in borderCountries" :key="border">
-            <button class="border-button" @click="handleBorderClick(border)">
+            <button
+              :class="['border-button', { 'border-button__dark': darkMode }]"
+              @click="handleBorderClick(border)"
+            >
               {{ border }}
             </button>
           </div>
@@ -190,13 +193,18 @@ export default defineComponent({
 }
 
 .border-button {
-  padding: 5px 15px;
+  padding: 8px;
   background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-size: 14px;
+  border-radius: 5px;
+  border: none;
+}
+
+.border-button__dark {
+  color: #ffffff;
+  background-color: #2e3742;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .border-button:hover {
