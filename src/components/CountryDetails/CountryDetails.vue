@@ -139,6 +139,10 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .details-container__image {
@@ -160,6 +164,10 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   gap: 20px;
   width: 100%;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }
 
 .clean-list__card {
