@@ -41,7 +41,7 @@
 <script lang="ts">
 import router from '@/router'
 import { useCountriesStore } from '@/stores/countriesStore'
-import { defineComponent, onMounted, ref } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import CountryDetails from '../components/CountryDetails/CountryDetails.vue'
 import TopBar from '../components/TopBar/TopBar.vue'
 
@@ -73,7 +73,14 @@ export default defineComponent({
       }
     })
 
-    const selectedCountry = countriesStore.selectedCountry
+    watch(
+      () => countriesStore.selectedCountry,
+      (newCountry) => {
+        selectedCountry.value = newCountry
+      }
+    )
+
+    const selectedCountry = ref(countriesStore.selectedCountry)
 
     return {
       toggleDarkMode,

@@ -4,7 +4,7 @@
       <img :src="flagUrl" alt="Country flag" class="details-container__image" />
     </div>
 
-    <div class="card-container__details">
+    <div v-if="!loading" class="card-container__details">
       <div>
         <h1>{{ countryName }}</h1>
       </div>
@@ -30,7 +30,9 @@
         <h3>Border Countries:</h3>
         <div class="borders-buttons">
           <div v-for="border in borderCountries" :key="border">
-            <button class="border-button">{{ border }}</button>
+            <button class="border-button" @click="handleBorderClick(border)">
+              {{ border }}
+            </button>
           </div>
         </div>
       </div>
@@ -39,7 +41,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { useCountriesStore } from '../../stores/countriesStore'
 
 export default defineComponent({
   name: 'CountryDetails',
@@ -92,6 +95,40 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  setup(props) {
+    const countriesStore = useCountriesStore()
+    const loading = ref(false)
+
+    const handleBorderClick = async (borderCountry: string) => {
+      loading.value = true
+      const country = countriesStore.getSelectedCountry(borderCountry)
+      const selectedObject = {
+        flagUrl: country?.flags.png,
+        countryName: country?.name.common,
+        populationValue: country?.population,
+        capitalCity: country?.capital[0],
+        region: country?.region,
+        nativeName: country?.name.official,
+        subRegion: country?.subregion,
+        topLevelDomain: country?.tld[0],
+        currencies: Object.keys(country.currencies)[0],
+        languages: Object.values(country.languages).join(', '),
+        borderCountries: country.borders,
+      }
+
+      if (selectedObject) {
+        await countriesStore.setSelectedCountry(selectedObject)
+      } else {
+        console.error('Country not found')
+      }
+      loading.value = false
+    }
+
+    return {
+      handleBorderClick,
+      loading,
+    }
   },
 })
 </script>

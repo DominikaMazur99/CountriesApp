@@ -81,5 +81,12 @@ export const useCountriesStore = defineStore('countries', {
         )
       }
     },
+    getSelectedCountry: (state) => {
+      return (name: string) => {
+        return state.countries.find(
+          (country) => country.name.common.toLowerCase() === name.toLowerCase()
+        )
+      }
+    },
   },
 })
