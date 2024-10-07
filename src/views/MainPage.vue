@@ -100,6 +100,7 @@ export default defineComponent({
     })
 
     const regions = computed(() => countriesStore.regions)
+    console.log(regions)
 
     interface IDetails {
       flagUrl: string
@@ -118,7 +119,10 @@ export default defineComponent({
     const handleShowDetails = (details: IDetails) => {
       countriesStore.setSelectedCountry(details)
 
-      router.push({ name: 'detailsView' })
+      router.push({
+        name: 'detailsView',
+        params: { countryName: details.countryName },
+      })
     }
 
     return {

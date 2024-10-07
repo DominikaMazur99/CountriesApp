@@ -71,7 +71,7 @@ export default defineComponent({
   border: none;
   background-color: none;
   padding: 12px;
-  align-items: center;
+  align-items: flex-end;
   font-weight: 300;
   font-size: 15px;
 }

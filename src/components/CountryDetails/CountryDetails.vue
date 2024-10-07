@@ -36,7 +36,7 @@
       </div>
       <div class="borders-section">
         <span class="detailsList__label">Border Countries:</span>
-        <div class="borders-buttons">
+        <div class="borders-buttons" v-if="borderCountries.length">
           <div v-for="border in borderCountries" :key="border">
             <button
               :class="['border-button', { 'border-button__dark': darkMode }]"
@@ -46,6 +46,7 @@
             </button>
           </div>
         </div>
+        <span v-else>-</span>
       </div>
     </div>
   </div>
@@ -53,6 +54,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useCountriesStore } from '../../stores/countriesStore'
 
 export default defineComponent({
@@ -109,6 +111,7 @@ export default defineComponent({
   },
   setup(props) {
     const countriesStore = useCountriesStore()
+    const router = useRouter()
     const loading = ref(false)
 
     const baseInfoList = computed(() => [
@@ -144,6 +147,10 @@ export default defineComponent({
 
       if (selectedObject) {
         await countriesStore.setSelectedCountry(selectedObject)
+        router.push({
+          name: 'detailsView',
+          params: { countryName: selectedObject.countryName },
+        })
       } else {
         console.error('Country not found')
       }

@@ -45,6 +45,7 @@
 import router from '@/router'
 import { useCountriesStore } from '@/stores/countriesStore'
 import { defineComponent, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import CountryDetails from '../components/CountryDetails/CountryDetails.vue'
 import TopBar from '../components/TopBar/TopBar.vue'
 
@@ -57,6 +58,7 @@ export default defineComponent({
   setup() {
     const isDarkMode = ref(localStorage.getItem('darkMode') === 'on')
     const countriesStore = useCountriesStore()
+    const route = useRoute()
 
     const toggleDarkMode = () => {
       isDarkMode.value = !isDarkMode.value
@@ -64,11 +66,38 @@ export default defineComponent({
     }
 
     const handleBack = () => {
-      router.push({ name: 'mainPage' })
-      countriesStore.setSelectedCountry(null)
+      router.go(-1)
+    }
+
+    const fetchCountry = (countryName: string) => {
+      const country = countriesStore.getSelectedCountry(countryName)
+
+      if (country) {
+        const selectedObject = {
+          flagUrl: country?.flags.png,
+          countryName: country?.name.common,
+          populationValue: country?.population,
+          capitalCity: country?.capital[0],
+          region: country?.region,
+          nativeName: country?.name.official,
+          subRegion: country?.subregion,
+          topLevelDomain: country?.tld[0],
+          currencies: Object.keys(country.currencies)[0],
+          languages: Object.values(country.languages).join(', '),
+          borderCountries: country.borders,
+        }
+        selectedCountry.value = selectedObject
+        countriesStore.setSelectedCountry(selectedObject)
+      } else {
+        router.push({ name: 'mainPage' })
+        countriesStore.setSelectedCountry(null)
+      }
     }
 
     onMounted(() => {
+      fetchCountry(route.params.countryName as string)
+      console.log(route.params.countryName)
+
       if (localStorage.getItem('darkMode') === 'on') {
         isDarkMode.value = true
       } else {
@@ -78,12 +107,10 @@ export default defineComponent({
     const selectedCountry = ref(countriesStore.selectedCountry)
 
     watch(
-      () => countriesStore.selectedCountry,
-      (newCountry) => {
-        // Tworzymy nową referencję, aby Vue zareagowało na zmianę
-        selectedCountry.value = { ...newCountry }
-      },
-      { immediate: true } // Włącz natychmiastowe nasłuchiwanie
+      () => route.params.countryName,
+      (newCountryName) => {
+        fetchCountry(newCountryName as string)
+      }
     )
 
     return {
