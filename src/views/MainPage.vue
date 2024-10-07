@@ -1,43 +1,48 @@
 <template>
-  <div class="inputs-box">
-    <div class="inputs-box__search">
-      <SearchInput v-model="searchTerm" :darkMode="isDarkMode" />
+  <div>
+    <div class="inputs-box">
+      <div class="inputs-box__search">
+        <SearchInput v-model="searchTerm" :darkMode="isDarkMode" />
+      </div>
+      <div class="inputs-box__select">
+        <SelectInput
+          v-model="selectedOption"
+          :options="regions"
+          :darkMode="isDarkMode"
+        />
+      </div>
     </div>
-    <div class="inputs-box__select">
-      <SelectInput
-        v-model="selectedOption"
-        :options="regions"
+    <div v-if="loading" class="loader-container">
+      <div class="loader"></div>
+    </div>
+    <div class="countries-cards" v-else>
+      <CountryCard
+        v-for="country in filteredCountries"
+        :key="country.cca3"
+        :flagUrl="country.flags.png"
+        :countryName="country.name.common"
+        :populationValue="country.population"
+        :capitalCity="country.capital[0]"
+        :region="country.region"
         :darkMode="isDarkMode"
+        @click="
+          handleShowDetails({
+            flagUrl: country?.flags.png,
+            countryName: country?.name.common,
+            populationValue: country?.population,
+            capitalCity: country?.capital[0],
+            region: country?.region,
+            nativeName: country?.name.official,
+            subRegion: country?.subregion,
+            topLevelDomain: country?.tld[0],
+            currencies: Object.keys(country.currencies)[0],
+            languages: Object.values(country.languages).join(', '),
+            borderCountries: country.borders,
+          })
+        "
+        class="countries-cards__details"
       />
     </div>
-  </div>
-  <div class="countries-cards">
-    <CountryCard
-      v-for="country in filteredCountries"
-      :key="country.cca3"
-      :flagUrl="country.flags.png"
-      :countryName="country.name.common"
-      :populationValue="country.population"
-      :capitalCity="country.capital[0]"
-      :region="country.region"
-      :darkMode="isDarkMode"
-      @click="
-        handleShowDetails({
-          flagUrl: country?.flags.png,
-          countryName: country?.name.common,
-          populationValue: country?.population,
-          capitalCity: country?.capital[0],
-          region: country?.region,
-          nativeName: country?.name.official,
-          subRegion: country?.subregion,
-          topLevelDomain: country?.tld[0],
-          currencies: Object.keys(country.currencies)[0],
-          languages: Object.values(country.languages).join(', '),
-          borderCountries: country.borders,
-        })
-      "
-      class="countries-cards__details"
-    />
   </div>
 </template>
 
@@ -108,7 +113,7 @@ export default defineComponent({
       filteredCountries,
       regions,
       handleShowDetails,
-      loading: countriesStore.loading,
+      loading: computed(() => countriesStore.loading),
     }
   },
 })

@@ -15,6 +15,7 @@ export const useCountriesStore = defineStore('countries', {
       if (this.countries.length > 0) return
 
       this.loading = true
+      console.log(this.loading)
       try {
         const response = await fetch(
           'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,subregion,tld,currencies,languages,borders'
@@ -58,6 +59,7 @@ export const useCountriesStore = defineStore('countries', {
         this.error = 'Failed to fetch countries'
       } finally {
         this.loading = false
+        console.log('koniec')
       }
     },
 
