@@ -37,7 +37,10 @@
       </button>
     </div>
 
-    <div v-if="isOpen" class="option-container">
+    <div
+      v-if="isOpen"
+      :class="['option-container', { 'option-container__dark': darkMode }]"
+    >
       <ul class="clean-list">
         <li
           v-for="option in filteredOptions"
@@ -172,13 +175,18 @@ export default defineComponent({
   max-height: 200px;
   overflow-y: auto;
   z-index: 1000;
+  color: gray;
+}
+.option-container__dark {
+  background-color: #2e3742;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: white;
 }
 
 .option-item {
   padding: 10px 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  color: gray;
 }
 
 .option-item:hover {

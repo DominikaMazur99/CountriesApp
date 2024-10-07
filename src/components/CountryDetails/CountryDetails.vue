@@ -239,6 +239,8 @@ export default defineComponent({
   background-color: transparent;
   padding: 8px;
   color: #000000;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .border-button__dark {

@@ -72,7 +72,7 @@ export default defineComponent({
   background-color: none;
   padding: 12px;
   align-items: flex-end;
-  font-weight: 300;
+  font-weight: 200;
   font-size: 15px;
 }
 .switch-mode__btn:hover {
