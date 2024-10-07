@@ -11,18 +11,18 @@
       <div class="details-box">
         <div>
           <ul class="clean-list__card">
-            <li><strong>Native Name: </strong>{{ nativeName }}</li>
-            <li><strong>Population: </strong>{{ populationValue }}</li>
-            <li><strong>Region: </strong>{{ region }}</li>
-            <li><strong>Sub Region: </strong>{{ subRegion }}</li>
-            <li><strong>Capital: </strong>{{ capitalCity }}</li>
+            <li v-for="value in baseInfoList" :key="value.value">
+              <strong>{{ value.label }}: </strong>
+              {{ value.value }}
+            </li>
           </ul>
         </div>
         <div>
           <ul class="clean-list__card">
-            <li><strong>Top Level Domain: </strong>{{ topLevelDomain }}</li>
-            <li><strong>Currencies: </strong>{{ currencies }}</li>
-            <li><strong>Languages: </strong>{{ languages }}</li>
+            <li v-for="value in secondInfoList" :key="value.value">
+              <strong>{{ value.label }}: </strong>
+              {{ value.value }}
+            </li>
           </ul>
         </div>
       </div>
@@ -103,6 +103,20 @@ export default defineComponent({
     const countriesStore = useCountriesStore()
     const loading = ref(false)
 
+    const baseInfoList = [
+      { label: 'Native Name', value: props.nativeName },
+      { label: 'Population', value: props.populationValue },
+      { label: 'Region', value: props.region },
+      { label: 'Sub Region', value: props.subRegion },
+      { label: 'Capital', value: props.capitalCity },
+    ]
+
+    const secondInfoList = [
+      { label: 'Top Level Domain', value: props.topLevelDomain },
+      { label: 'Currencies', value: props.currencies },
+      { label: 'Languages', value: props.languages },
+    ]
+
     const handleBorderClick = async (borderCountry: string) => {
       loading.value = true
       const country = countriesStore.getSelectedCountry(borderCountry)
@@ -131,6 +145,8 @@ export default defineComponent({
     return {
       handleBorderClick,
       loading,
+      baseInfoList,
+      secondInfoList,
     }
   },
 })
@@ -142,6 +158,7 @@ export default defineComponent({
   grid-template-columns: 1fr 1fr;
   align-items: center;
   width: 100%;
+  gap: 20px;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -150,8 +167,9 @@ export default defineComponent({
 
 .details-container__image {
   width: 100%;
-  max-width: 400px;
-  margin-bottom: 30px;
+  aspect-ratio: 10 / 7;
+  object-fit: cover;
+  max-width: 500px;
 }
 
 .card-container__details {
@@ -193,12 +211,15 @@ export default defineComponent({
 }
 
 .border-button {
-  padding: 8px;
-  background-color: #f5f5f5;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
   border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  background-color: transparent;
+  padding: 8px;
+  color: #000000;
 }
 
 .border-button__dark {
@@ -208,7 +229,7 @@ export default defineComponent({
 }
 
 .border-button:hover {
-  background-color: #e0e0e0;
+  cursor: pointer;
 }
 
 .back-btn {

@@ -2,16 +2,18 @@
   <div :class="['page-container', { 'dark-mode': isDarkMode }]">
     <TopBar @toggle-dark-mode="toggleDarkMode" :darkMode="isDarkMode" />
     <div :class="['main-container', { 'dark-mode__main': isDarkMode }]">
-      <div class="main-container__box">
+      <div v-if="!loading" class="main-container__box">
         <div class="inputs-box">
-          <!-- SearchInput dla filtrowania po nazwie kraju -->
-          <SearchInput v-model="searchTerm" :darkMode="isDarkMode" />
-          <!-- SelectInput dla filtrowania po regionie -->
-          <SelectInput
-            v-model="selectedOption"
-            :options="regions"
-            :darkMode="isDarkMode"
-          />
+          <div class="inputs-box__search">
+            <SearchInput v-model="searchTerm" :darkMode="isDarkMode" />
+          </div>
+          <div class="inputs-box__select">
+            <SelectInput
+              v-model="selectedOption"
+              :options="regions"
+              :darkMode="isDarkMode"
+            />
+          </div>
         </div>
         <div class="countries-cards">
           <!-- Wyświetlanie przefiltrowanych krajów -->
@@ -43,6 +45,7 @@
           />
         </div>
       </div>
+      <div v-else class="loader"></div>
     </div>
   </div>
 </template>
@@ -126,12 +129,14 @@ export default defineComponent({
       toggleDarkMode,
       isDarkMode,
       handleShowDetails,
+      loading: countriesStore.loading,
     }
   },
 })
 </script>
 
 <style scoped>
+@import '../components/styles/styles.css';
 .page-container {
   display: grid;
   grid-template-rows: 50px auto;
@@ -155,13 +160,25 @@ export default defineComponent({
 
 .inputs-box {
   display: grid;
-  grid-template-columns: 0.75fr 1fr auto;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
   width: 100%;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+}
+.inputs-box__search {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.inputs-box__select {
+  display: grid;
+  grid-template-columns: 0.25fr;
+  justify-content: flex-end;
+  @media (max-width: 768px) {
+    justify-content: flex-start;
   }
 }
 .countries-cards {
