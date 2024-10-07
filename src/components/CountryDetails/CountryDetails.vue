@@ -132,17 +132,17 @@ export default defineComponent({
       loading.value = true
       const country = countriesStore.getSelectedCountry(borderCountry)
       const selectedObject = {
-        flagUrl: country?.flags.png,
-        countryName: country?.name.common,
-        populationValue: country?.population,
-        capitalCity: country?.capital[0],
-        region: country?.region,
-        nativeName: country?.name.official,
-        subRegion: country?.subregion,
-        topLevelDomain: country?.tld[0],
-        currencies: Object.keys(country.currencies)[0],
-        languages: Object.values(country.languages).join(', '),
-        borderCountries: country.borders,
+        flagUrl: country?.flags.png || '',
+        countryName: country?.name.common || '',
+        populationValue: country?.population || 0,
+        capitalCity: country?.capital?.[0] || '',
+        region: country?.region || '',
+        nativeName: country?.name.official || '',
+        subRegion: country?.subregion || '',
+        topLevelDomain: country?.tld?.[0] || '',
+        currencies: Object.keys(country?.currencies || {})[0] || '',
+        languages: Object.values(country?.languages || {}).join(', ') || '',
+        borderCountries: country?.borders || [],
       }
 
       if (selectedObject) {

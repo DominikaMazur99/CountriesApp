@@ -1,10 +1,11 @@
+import { Country, SelectedCountry } from '@/interfaces/interfaces'
 import { defineStore } from 'pinia'
 
 export const useCountriesStore = defineStore('countries', {
   state: () => ({
-    countries: [] as any[],
-    selectedCountry: null as any | null,
-    regions: [] as any[],
+    countries: [] as Country[],
+    selectedCountry: null as SelectedCountry | null,
+    regions: [] as string[],
     loading: false,
     error: null as string | null,
   }),
@@ -18,21 +19,16 @@ export const useCountriesStore = defineStore('countries', {
         const response = await fetch(
           'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,subregion,tld,currencies,languages,borders'
         )
-        const countries = await response.json()
+        const countries = (await response.json()) as Country[] // Cast the response as Country[]
+        console.log(countries)
 
-        const regions = [
-          ...new Set(countries.map((country: any) => country.region)),
-        ]
-        this.regions = regions.map((region) => ({
-          value: region,
-          label: region,
-        }))
+        const regions = [...new Set(countries.map((country) => country.region))]
+        this.regions = regions
 
+        // Processing borders
         const borders = countries
-          .filter(
-            (country: any) => country.borders && country.borders.length > 0
-          )
-          .flatMap((country: any) => country.borders)
+          .filter((country) => country.borders && country.borders.length > 0)
+          .flatMap((country) => country.borders)
 
         if (borders.length > 0) {
           const responseBorders = await fetch(
@@ -47,7 +43,7 @@ export const useCountriesStore = defineStore('countries', {
             borderMap[country.cca3] = country.name.common
           })
 
-          this.countries = countries.map((country: any) => {
+          this.countries = countries.map((country) => {
             if (country.borders) {
               country.borders = country.borders.map(
                 (code: string) => borderMap[code] || code
@@ -64,7 +60,8 @@ export const useCountriesStore = defineStore('countries', {
         this.loading = false
       }
     },
-    setSelectedCountry(country: any) {
+
+    setSelectedCountry(country: SelectedCountry | null) {
       this.selectedCountry = country
     },
   },

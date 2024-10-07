@@ -67,7 +67,7 @@ import {
   ref,
   watch,
 } from 'vue'
-import { Option } from '../interfaces/interfaces'
+import { Option } from '../../interfaces/interfaces'
 
 export default defineComponent({
   name: 'SelectInput',

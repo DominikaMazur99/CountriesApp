@@ -12,7 +12,6 @@
     </div>
   </div>
   <div class="countries-cards">
-    <!-- Wyświetlanie przefiltrowanych krajów -->
     <CountryCard
       v-for="country in filteredCountries"
       :key="country.cca3"
@@ -43,6 +42,7 @@
 </template>
 
 <script lang="ts">
+import { SelectedCountry } from '@/interfaces/interfaces'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import CountryCard from '../components/CountryCard/CountryCard.vue'
@@ -93,21 +93,7 @@ export default defineComponent({
 
     const regions = computed(() => countriesStore.regions)
 
-    interface IDetails {
-      flagUrl: string
-      countryName: string
-      populationValue: number
-      capitalCity: string
-      region: string
-      nativeName: string
-      subRegion: string
-      topLevelDomain: string
-      currencies: string
-      languages: string
-      borderCountries: any
-    }
-
-    const handleShowDetails = (details: IDetails) => {
+    const handleShowDetails = (details: SelectedCountry) => {
       countriesStore.setSelectedCountry(details)
 
       router.push({
