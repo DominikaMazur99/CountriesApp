@@ -1,16 +1,23 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import MainLayout from '../layout/MainLayout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'mainPage',
-    component: () => import('@/views/MainPage.vue'),
-  },
-  {
-    path: '/details/:countryName',
-    name: 'detailsView',
-    component: () => import('@/views/DetailsView.vue'),
-    props: true,
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        name: 'mainPage',
+        component: () => import('../views/MainPage.vue'),
+      },
+      {
+        path: '/details/:countryName',
+        name: 'detailsView',
+        component: () => import('../views/DetailsView.vue'),
+        props: true,
+      },
+    ],
   },
 ]
 

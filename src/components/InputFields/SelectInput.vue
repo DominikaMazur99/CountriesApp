@@ -117,7 +117,6 @@ export default defineComponent({
     }
 
     const handleClear = () => {
-      console.log('jestem')
       searchQuery.value = ''
       emit('update:modelValue', '')
     }

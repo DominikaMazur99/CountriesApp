@@ -1,3 +1,23 @@
+.page-container {
+  display: grid;
+  grid-template-rows: 50px auto;
+  height: 100vh;
+}
+.main-container {
+  background-color: #fafafa;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.dark-mode__main {
+  background-color: #232c35;
+  color: #ffffff;
+}
+.main-container__box {
+  padding: 50px 60px 30px 60px;
+  @media (max-width: 768px) {
+    padding: 50px 30px 30px 30px;
+  }
+}
 .search-input__container {
   display: flex;
   align-items: center;

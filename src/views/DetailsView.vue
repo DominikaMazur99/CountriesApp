@@ -1,42 +1,35 @@
 <template>
-  <div :class="['page-container', { 'dark-mode': isDarkMode }]">
-    <TopBar @toggle-dark-mode="toggleDarkMode" :darkMode="isDarkMode" />
-    <div :class="['main-container', { 'dark-mode__main': isDarkMode }]">
-      <div class="main-container__box">
-        <div class="details-box">
-          <div class="back-btn__container">
-            <button
-              :class="['back-btn', { 'back-btn__dark': isDarkMode }]"
-              @click="handleBack"
-            >
-              <v-icon
-                class="back-btn__icon"
-                width="16"
-                height="16"
-                name="bi-arrow-left"
-              />
-              <p>Back</p>
-            </button>
-          </div>
-          <div class="details-container">
-            <CountryDetails
-              v-if="selectedCountry"
-              :flagUrl="selectedCountry.flagUrl"
-              :countryName="selectedCountry.countryName"
-              :populationValue="selectedCountry.populationValue"
-              :capitalCity="selectedCountry.capitalCity"
-              :region="selectedCountry.region"
-              :nativeName="selectedCountry.nativeName"
-              :subRegion="selectedCountry.subRegion"
-              :topLevelDomain="selectedCountry.topLevelDomain"
-              :currencies="selectedCountry.currencies"
-              :languages="selectedCountry.languages"
-              :borderCountries="selectedCountry.borderCountries || []"
-              :darkMode="isDarkMode"
-            />
-          </div>
-        </div>
-      </div>
+  <div class="details-box">
+    <div class="back-btn__container">
+      <button
+        :class="['back-btn', { 'back-btn__dark': isDarkMode }]"
+        @click="handleBack"
+      >
+        <v-icon
+          class="back-btn__icon"
+          width="16"
+          height="16"
+          name="bi-arrow-left"
+        />
+        <p>Back</p>
+      </button>
+    </div>
+    <div class="details-container">
+      <CountryDetails
+        v-if="selectedCountry"
+        :flagUrl="selectedCountry.flagUrl"
+        :countryName="selectedCountry.countryName"
+        :populationValue="selectedCountry.populationValue"
+        :capitalCity="selectedCountry.capitalCity"
+        :region="selectedCountry.region"
+        :nativeName="selectedCountry.nativeName"
+        :subRegion="selectedCountry.subRegion"
+        :topLevelDomain="selectedCountry.topLevelDomain"
+        :currencies="selectedCountry.currencies"
+        :languages="selectedCountry.languages"
+        :borderCountries="selectedCountry.borderCountries || []"
+        :darkMode="isDarkMode"
+      />
     </div>
   </div>
 </template>
@@ -47,23 +40,21 @@ import { useCountriesStore } from '@/stores/countriesStore'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import CountryDetails from '../components/CountryDetails/CountryDetails.vue'
-import TopBar from '../components/TopBar/TopBar.vue'
 
 export default defineComponent({
   name: 'DetailsView',
   components: {
-    TopBar,
     CountryDetails,
   },
+  props: {
+    isDarkMode: {
+      type: Boolean,
+      required: true,
+    },
+  },
   setup() {
-    const isDarkMode = ref(localStorage.getItem('darkMode') === 'on')
     const countriesStore = useCountriesStore()
     const route = useRoute()
-
-    const toggleDarkMode = () => {
-      isDarkMode.value = !isDarkMode.value
-      localStorage.setItem('darkMode', isDarkMode.value ? 'on' : 'off')
-    }
 
     const handleBack = () => {
       router.go(-1)
@@ -96,14 +87,8 @@ export default defineComponent({
 
     onMounted(() => {
       fetchCountry(route.params.countryName as string)
-      console.log(route.params.countryName)
-
-      if (localStorage.getItem('darkMode') === 'on') {
-        isDarkMode.value = true
-      } else {
-        isDarkMode.value = false
-      }
     })
+
     const selectedCountry = ref(countriesStore.selectedCountry)
 
     watch(
@@ -114,8 +99,6 @@ export default defineComponent({
     )
 
     return {
-      toggleDarkMode,
-      isDarkMode,
       selectedCountry,
       handleBack,
     }
@@ -124,26 +107,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.page-container {
-  display: grid;
-  grid-template-rows: 50px auto;
-  height: 100vh;
-}
-.main-container {
-  background-color: #fafafa;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-.dark-mode__main {
-  background-color: #232c35;
-  color: #ffffff;
-}
-.main-container__box {
-  padding: 50px 60px 30px 60px;
-  @media (max-width: 768px) {
-    padding: 50px 30px 30px 30px;
-  }
-}
 .back-btn__container {
   display: grid;
   grid-template-columns: 0.25fr 1fr auto;
