@@ -18,7 +18,7 @@
     <div class="countries-cards" v-else>
       <CountryCard
         v-for="country in filteredCountries"
-        :key="country.cca3"
+        :key="country.name.official"
         :flagUrl="country.flags.png"
         :countryName="country.name.common"
         :populationValue="country.population"
@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { SelectedCountry } from '@/interfaces/interfaces'
+import { Option, SelectedCountry } from '@/interfaces/interfaces'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import CountryCard from '../components/CountryCard/CountryCard.vue'
@@ -96,7 +96,12 @@ export default defineComponent({
       return filtered
     })
 
-    const regions = computed(() => countriesStore.regions)
+    const regions = computed<Option[]>(() =>
+      countriesStore.regions.map((region) => ({
+        label: region,
+        value: region,
+      }))
+    )
 
     const handleShowDetails = (details: SelectedCountry) => {
       countriesStore.setSelectedCountry(details)

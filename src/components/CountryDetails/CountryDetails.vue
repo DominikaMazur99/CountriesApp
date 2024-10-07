@@ -37,10 +37,10 @@
       <div class="borders-section">
         <span class="detailsList__label">Border Countries:</span>
         <div class="borders-buttons" v-if="borderCountries.length">
-          <div v-for="border in borderCountries" :key="border">
+          <div v-for="border in borderCountries" :key="String(border)">
             <button
               :class="['border-button', { 'border-button__dark': darkMode }]"
-              @click="handleBorderClick(border)"
+              @click="handleBorderClick(String(border))"
             >
               {{ border }}
             </button>
