@@ -7,12 +7,20 @@ import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import {
   BiArrowLeft,
   BiMoon,
+  BiX,
   FaMoon,
   HiSolidSearch,
   MdKeyboardarrowdownSharp,
 } from 'oh-vue-icons/icons'
 
-addIcons(BiMoon, FaMoon, HiSolidSearch, MdKeyboardarrowdownSharp, BiArrowLeft)
+addIcons(
+  BiMoon,
+  FaMoon,
+  HiSolidSearch,
+  MdKeyboardarrowdownSharp,
+  BiArrowLeft,
+  BiX
+)
 
 const app = createApp(App)
 const pinia = createPinia()

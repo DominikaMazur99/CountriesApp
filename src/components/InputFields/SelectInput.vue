@@ -6,7 +6,6 @@
         { 'dark-mode-input__container': darkMode },
       ]"
       style="justify-content: space-between"
-      @click="toggleDropdown"
     >
       <input
         :class="['search-input', { 'dark-mode__input': darkMode }]"
@@ -14,14 +13,28 @@
         v-model="searchQuery"
         @focus="isOpen = true"
       />
-      <v-icon
-        class="search-icon"
-        width="20"
-        height="20"
-        name="md-keyboardarrowdown-sharp"
-        :style="{ color: darkMode ? 'white' : 'gray' }"
+      <button
+        v-if="!modelValue.length"
         @click="toggleDropdown"
-      />
+        class="btn-nostyle"
+      >
+        <v-icon
+          class="search-icon"
+          width="20"
+          height="20"
+          name="md-keyboardarrowdown-sharp"
+          :style="{ color: darkMode ? 'white' : 'gray' }"
+        />
+      </button>
+      <button v-else @click="handleClear" class="btn-nostyle">
+        <v-icon
+          class="search-icon"
+          width="20"
+          height="20"
+          name="bi-x"
+          :style="{ color: darkMode ? 'white' : 'gray' }"
+        />
+      </button>
     </div>
 
     <div v-if="isOpen" class="option-container">
@@ -86,7 +99,8 @@ export default defineComponent({
       () => props.modelValue,
       (newValue) => {
         searchQuery.value = newValue
-      }
+      },
+      { immediate: true }
     )
 
     const toggleDropdown = () => {
@@ -97,6 +111,12 @@ export default defineComponent({
       searchQuery.value = label
       emit('update:modelValue', label)
       isOpen.value = false
+    }
+
+    const handleClear = () => {
+      console.log('jestem')
+      searchQuery.value = ''
+      emit('update:modelValue', '')
     }
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -124,6 +144,7 @@ export default defineComponent({
       isOpen,
       toggleDropdown,
       selectOption,
+      handleClear,
       dropdownContainer,
       placeholder,
     }
@@ -162,5 +183,14 @@ export default defineComponent({
 
 .option-item:hover {
   background-color: #f0f0f0;
+}
+.btn-nostyle {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: transparent;
+}
+.btn-nostyle:hover {
+  cursor: pointer;
 }
 </style>

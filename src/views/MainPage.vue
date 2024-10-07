@@ -88,19 +88,25 @@ export default defineComponent({
       countriesStore.fetchCountries()
     })
 
-    // Filtrowanie krajów według nazwy lub regionu
     const filteredCountries = computed(() => {
+      let filtered = countriesStore.countries
+
       if (selectedOption.value) {
-        return countriesStore.getCountriesByRegion(selectedOption.value)
-      } else if (searchTerm.value) {
-        return countriesStore.getCountriesByName(searchTerm.value)
-      } else {
-        return countriesStore.countries // Wyświetl wszystkie kraje, jeśli nic nie jest wybrane
+        filtered = countriesStore.getCountriesByRegion(selectedOption.value)
       }
+
+      if (searchTerm.value) {
+        filtered = filtered.filter((country) =>
+          country.name.common
+            .toLowerCase()
+            .includes(searchTerm.value.toLowerCase())
+        )
+      }
+
+      return filtered
     })
 
     const regions = computed(() => countriesStore.regions)
-    console.log(regions)
 
     interface IDetails {
       flagUrl: string
