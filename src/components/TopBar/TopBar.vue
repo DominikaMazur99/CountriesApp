@@ -58,13 +58,13 @@ export default defineComponent({
 }
 .topbar-box__name {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 400;
   line-height: 1.2;
 }
 .topbar-box__mode {
   display: flex;
   justify-content: space-between;
-  gap: 2px;
+  gap: 10px;
   align-items: center;
 }
 .switch-mode__btn {
@@ -72,6 +72,8 @@ export default defineComponent({
   background-color: none;
   padding: 12px;
   align-items: center;
+  font-weight: 300;
+  font-size: 15px;
 }
 .switch-mode__btn:hover {
   cursor: pointer;

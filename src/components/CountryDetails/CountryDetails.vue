@@ -6,28 +6,36 @@
 
     <div v-if="!loading" class="card-container__details">
       <div>
-        <h1>{{ countryName }}</h1>
+        <span class="card-title">{{ countryName }}</span>
       </div>
       <div class="details-box">
         <div>
           <ul class="clean-list__card">
-            <li v-for="value in baseInfoList" :key="value.value">
-              <strong>{{ value.label }}: </strong>
-              {{ value.value }}
+            <li
+              v-for="value in baseInfoList"
+              :key="value.value"
+              class="detailsList"
+            >
+              <span class="detailsList__label">{{ value.label }}: </span>
+              <span class="detailsList__value"> {{ value.value }}</span>
             </li>
           </ul>
         </div>
         <div>
           <ul class="clean-list__card">
-            <li v-for="value in secondInfoList" :key="value.value">
-              <strong>{{ value.label }}: </strong>
-              {{ value.value }}
+            <li
+              v-for="value in secondInfoList"
+              :key="value.value"
+              class="detailsList"
+            >
+              <span class="detailsList__label">{{ value.label }}: </span>
+              <span class="detailsList__value"> {{ value.value }}</span>
             </li>
           </ul>
         </div>
       </div>
       <div class="borders-section">
-        <h3>Border Countries:</h3>
+        <span class="detailsList__label">Border Countries:</span>
         <div class="borders-buttons">
           <div v-for="border in borderCountries" :key="border">
             <button
@@ -153,6 +161,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
+@import '../styles/styles.css';
 .details-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -198,10 +207,13 @@ export default defineComponent({
 
 .clean-list__card li {
   margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .borders-section {
-  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
 
 .borders-buttons {

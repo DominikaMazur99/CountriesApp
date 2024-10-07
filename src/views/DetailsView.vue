@@ -15,7 +15,7 @@
                 height="16"
                 name="bi-arrow-left"
               />
-              <p class="back-btn__text">Back</p>
+              <p>Back</p>
             </button>
           </div>
           <div class="details-container">
@@ -134,6 +134,8 @@ export default defineComponent({
   padding: 2px 8px;
   min-width: 150px;
   color: #000000;
+  font-size: 14px;
+  font-weight: 300;
 }
 
 .back-btn__dark {

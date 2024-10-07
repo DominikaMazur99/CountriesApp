@@ -86,3 +86,18 @@
     transform: rotate(360deg);
   }
 }
+.card-title {
+  font-size: 24px;
+  font-weight: 400;
+}
+.detailsList {
+  display: flex;
+  gap: 10px;
+}
+.detailsList__label {
+  font-weight: 400;
+  text-wrap: nowrap;
+}
+.detailsList__value {
+  font-weight: 300;
+}

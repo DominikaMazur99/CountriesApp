@@ -2,12 +2,17 @@
   <div :class="['card-container', { 'dark-mode__card': darkMode }]">
     <img :src="flagUrl" alt="Country flag" class="card-container__image" />
     <div class="card-container__description">
-      <h1>{{ countryName }}</h1>
+      <span class="card-title">{{ countryName }}</span>
       <div class="card-container__details">
         <ul class="clean-list__card">
-          <li><strong>Population: </strong>{{ populationValue }}</li>
-          <li><strong>Region: </strong>{{ region }}</li>
-          <li><strong>Capital: </strong>{{ capitalCity }}</li>
+          <li
+            v-for="value in cardInfoList"
+            :key="value.value"
+            class="detailsList"
+          >
+            <span class="detailsList__label">{{ value.label }}: </span>
+            <span class="detailsList__value"> {{ value.value }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -15,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'CountryCard',
@@ -44,6 +49,16 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  setup(props) {
+    const cardInfoList = computed(() => [
+      { label: 'Population', value: props.populationValue },
+      { label: 'Region', value: props.region },
+      { label: 'Capital', value: props.capitalCity },
+    ])
+    return {
+      cardInfoList,
+    }
   },
 })
 </script>
