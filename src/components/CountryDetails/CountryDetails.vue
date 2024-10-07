@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { useCountriesStore } from '../../stores/countriesStore'
 
 export default defineComponent({
@@ -103,19 +103,19 @@ export default defineComponent({
     const countriesStore = useCountriesStore()
     const loading = ref(false)
 
-    const baseInfoList = [
+    const baseInfoList = computed(() => [
       { label: 'Native Name', value: props.nativeName },
       { label: 'Population', value: props.populationValue },
       { label: 'Region', value: props.region },
       { label: 'Sub Region', value: props.subRegion },
       { label: 'Capital', value: props.capitalCity },
-    ]
+    ])
 
-    const secondInfoList = [
+    const secondInfoList = computed(() => [
       { label: 'Top Level Domain', value: props.topLevelDomain },
       { label: 'Currencies', value: props.currencies },
       { label: 'Languages', value: props.languages },
-    ]
+    ])
 
     const handleBorderClick = async (borderCountry: string) => {
       loading.value = true

@@ -75,15 +75,16 @@ export default defineComponent({
         isDarkMode.value = false
       }
     })
+    const selectedCountry = ref(countriesStore.selectedCountry)
 
     watch(
       () => countriesStore.selectedCountry,
       (newCountry) => {
-        selectedCountry.value = newCountry
-      }
+        // Tworzymy nową referencję, aby Vue zareagowało na zmianę
+        selectedCountry.value = { ...newCountry }
+      },
+      { immediate: true } // Włącz natychmiastowe nasłuchiwanie
     )
-
-    const selectedCountry = ref(countriesStore.selectedCountry)
 
     return {
       toggleDarkMode,
@@ -111,9 +112,9 @@ export default defineComponent({
   color: #ffffff;
 }
 .main-container__box {
-  padding: 50px 60px 0 60px;
+  padding: 50px 60px 30px 60px;
   @media (max-width: 768px) {
-    padding: 50px 30px 0 30px;
+    padding: 50px 30px 30px 30px;
   }
 }
 .back-btn__container {

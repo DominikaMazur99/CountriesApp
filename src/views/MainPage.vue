@@ -152,9 +152,9 @@ export default defineComponent({
   color: #ffffff;
 }
 .main-container__box {
-  padding: 50px 60px 20px 60px;
+  padding: 50px 60px;
   @media (max-width: 768px) {
-    padding: 50px 30px 20px 30px;
+    padding: 50px 30px;
   }
 }
 
