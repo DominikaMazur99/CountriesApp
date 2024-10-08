@@ -148,7 +148,11 @@ export default defineComponent({
         nativeName: country?.name.official || '',
         subRegion: country?.subregion || '',
         topLevelDomain: country?.tld?.[0] || '',
-        currencies: Object.keys(country?.currencies || {})[0] || '',
+        currencies: country?.currencies
+          ? Object.values(country.currencies)
+              .map((currency: any) => currency.name)
+              .join(', ')
+          : '',
         languages: Object.values(country?.languages || {}).join(', ') || '',
         borderCountries: country?.borders || [],
       }

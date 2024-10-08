@@ -35,7 +35,9 @@
             nativeName: country?.name.official,
             subRegion: country?.subregion,
             topLevelDomain: country?.tld[0],
-            currencies: Object.keys(country.currencies)[0],
+            currencies: Object.values(country.currencies)
+              .map((currency) => currency.name)
+              .join(', '),
             languages: Object.values(country.languages).join(', '),
             borderCountries: country.borders,
           })

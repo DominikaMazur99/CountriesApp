@@ -64,6 +64,9 @@ export default defineComponent({
       const country = countriesStore.getSelectedCountry(countryName)
 
       if (country) {
+        console.log(
+          Object.values(country.currencies).map((currency) => currency.name)
+        )
         const selectedObject = {
           flagUrl: country?.flags.png,
           countryName: country?.name.common,
@@ -73,7 +76,9 @@ export default defineComponent({
           nativeName: country?.name.official,
           subRegion: country?.subregion,
           topLevelDomain: country?.tld[0],
-          currencies: Object.keys(country.currencies)[0],
+          currencies: Object.values(country.currencies)
+            .map((currency) => currency.name)
+            .join(', '),
           languages: Object.values(country.languages).join(', '),
           borderCountries: country.borders,
         }
