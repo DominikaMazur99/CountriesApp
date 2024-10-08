@@ -132,12 +132,11 @@ export default defineComponent({
 .inputs-box {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 30px;
   width: 100%;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 }
 .inputs-box__search {
@@ -155,8 +154,8 @@ export default defineComponent({
 .countries-cards {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 20px;
-  padding: 20px;
+  gap: 50px;
+  padding-top: 50px;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -168,6 +167,10 @@ export default defineComponent({
 
   @media (min-width: 1200px) {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    padding: 50px 20px 20px 20px;
   }
 }
 .countries-cards__details:hover {

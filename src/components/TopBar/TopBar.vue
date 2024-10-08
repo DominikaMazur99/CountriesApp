@@ -9,9 +9,17 @@
           :class="['switch-mode__btn', { 'switch-mode__dark': darkMode }]"
           @click="$emit('toggle-dark-mode')"
         >
-          <v-icon width="16" height="16" name="fa-moon" />
-          <span v-if="darkMode">Light Mode</span>
-          <span v-else>Dark Mode</span>
+          <div style="display: flex; gap: 6px; align-items: flex-end">
+            <v-icon
+              v-if="darkMode"
+              width="16"
+              height="16"
+              name="io-moon-sharp"
+            />
+            <v-icon v-else width="16" height="16" name="io-moon-outline" />
+            <span v-if="darkMode">Light Mode</span>
+            <span v-else>Dark Mode</span>
+          </div>
         </div>
       </div>
     </div>
@@ -83,8 +91,6 @@ export default defineComponent({
 }
 .topbar-box__mode {
   display: flex;
-  justify-content: space-between;
-  gap: 10px;
   align-items: center;
 }
 .switch-mode__btn {

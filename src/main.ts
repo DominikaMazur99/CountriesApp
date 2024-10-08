@@ -6,20 +6,20 @@ import router from './router'
 import { OhVueIcon, addIcons } from 'oh-vue-icons'
 import {
   BiArrowLeft,
-  BiMoon,
   BiX,
-  FaMoon,
   HiSolidSearch,
+  IoMoonOutline,
+  IoMoonSharp,
   MdKeyboardarrowdownSharp,
 } from 'oh-vue-icons/icons'
 
 addIcons(
-  BiMoon,
-  FaMoon,
   HiSolidSearch,
   MdKeyboardarrowdownSharp,
   BiArrowLeft,
-  BiX
+  BiX,
+  IoMoonOutline,
+  IoMoonSharp
 )
 
 const app = createApp(App)

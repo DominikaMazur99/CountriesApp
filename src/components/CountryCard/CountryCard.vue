@@ -68,12 +68,13 @@ export default defineComponent({
 
 .card-container {
   display: grid;
-  grid-template-rows: 40% 60%;
+  grid-template-rows: 50% 50%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   overflow: hidden;
   width: 100%;
   max-width: 300px;
+  max-height: 380px;
   height: 100%;
 }
 
