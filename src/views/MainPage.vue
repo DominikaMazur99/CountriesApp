@@ -42,7 +42,10 @@
             borderCountries: country.borders,
           })
         "
-        class="countries-cards__details"
+        :class="[
+          'countries-cards__details',
+          { 'country-cards__details__dark': isDarkMode },
+        ]"
       />
     </div>
   </div>
@@ -175,5 +178,10 @@ export default defineComponent({
 }
 .countries-cards__details:hover {
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.country-cards__details__dark:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  background-color: #3a454f;
 }
 </style>

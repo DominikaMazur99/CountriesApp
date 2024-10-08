@@ -153,8 +153,8 @@ export default defineComponent({
 }
 .back-btn__dark:hover {
   color: #ffffff;
-  background-color: #2e3742;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  background-color: #3a454f;
   border-color: transparent;
 }
 .details-box {
