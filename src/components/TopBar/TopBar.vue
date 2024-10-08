@@ -1,7 +1,9 @@
 <template>
   <div :class="['topbar-container', { 'dark-mode': darkMode }]">
     <div class="topbar-box">
-      <span :class="['topbar-box__name']">Where in the world?</span>
+      <span @click="handleGoToMainPage" :class="['topbar-box__name']"
+        >Where in the world?</span
+      >
       <div class="topbar-box__mode">
         <div
           :class="['switch-mode__btn', { 'switch-mode__dark': darkMode }]"
@@ -17,7 +19,10 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
+import { useCountriesStore } from '@/stores/countriesStore'
 import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'TopBar',
@@ -26,6 +31,18 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  setup() {
+    const countriesStore = useCountriesStore()
+    const route = useRoute()
+    const handleGoToMainPage = () => {
+      router.push({ name: 'mainPage' })
+      countriesStore.setSelectedCountry(null)
+    }
+
+    return {
+      handleGoToMainPage,
+    }
   },
 })
 </script>
@@ -61,6 +78,9 @@ export default defineComponent({
   font-weight: 400;
   line-height: 1.2;
 }
+.topbar-box__name:hover {
+  cursor: pointer;
+}
 .topbar-box__mode {
   display: flex;
   justify-content: space-between;
@@ -77,13 +97,12 @@ export default defineComponent({
 }
 .switch-mode__btn:hover {
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 .switch-mode__dark:hover {
-  cursor: pointer;
-  box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1),
-    0 2px 4px rgba(255, 255, 255, 0.08);
-  background-color: 0 4px 6px rgba(255, 255, 255, 0.1),
-    0 2px 4px rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  background-color: #2e3742;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border-color: transparent;
 }
 </style>

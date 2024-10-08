@@ -42,7 +42,9 @@
               :class="['border-button', { 'border-button__dark': darkMode }]"
               @click="handleBorderClick(String(border))"
             >
-              {{ border }}
+              <span class="detailsList__value">
+                {{ border }}
+              </span>
             </button>
           </div>
         </div>
@@ -218,9 +220,13 @@ export default defineComponent({
 }
 
 .borders-section {
-  display: flex;
+  display: grid;
   gap: 20px;
   align-items: center;
+  grid-template-columns: 0.25fr auto;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .borders-buttons {
@@ -230,27 +236,32 @@ export default defineComponent({
 }
 
 .border-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  border: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
   background-color: transparent;
-  padding: 8px;
-  color: #000000;
-  font-size: 14px;
-  font-weight: 300;
+  padding: 4px 8px;
+  min-width: 100px;
 }
 
 .border-button__dark {
   color: #ffffff;
   background-color: #2e3742;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  border-color: transparent;
 }
 
 .border-button:hover {
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.border-button__dark:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.7);
+  background-color: #3a454f;
 }
 
 .back-btn {

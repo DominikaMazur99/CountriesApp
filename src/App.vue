@@ -17,6 +17,11 @@ body {
   overflow-y: hidden;
   font-family: var(--RobotoText);
 }
+button {
+  font-family: var(--RobotoText);
+  font-size: 14px;
+  font-weight: 200;
+}
 
 #app {
   width: 100vw;
@@ -24,5 +29,6 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: hidden;
+  font-family: var(--RobotoText);
 }
 </style>
