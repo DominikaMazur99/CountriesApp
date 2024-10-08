@@ -156,5 +156,8 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 50px;
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
 }
 </style>

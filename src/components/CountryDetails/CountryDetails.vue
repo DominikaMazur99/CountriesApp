@@ -35,7 +35,7 @@
         </div>
       </div>
       <div class="borders-section">
-        <span class="detailsList__label">Border Countries:</span>
+        <span class="detailsList__border">Border Countries:</span>
         <div class="borders-buttons" v-if="borderCountries.length">
           <div v-for="border in borderCountries" :key="String(border)">
             <button
@@ -179,7 +179,6 @@ export default defineComponent({
   gap: 20px;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 10px;
   }
 }
 
@@ -193,7 +192,7 @@ export default defineComponent({
 .card-container__details {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   max-width: 600px;
   width: 100%;
 }
@@ -283,5 +282,10 @@ export default defineComponent({
 
 .back-btn__icon {
   margin-right: 8px;
+}
+.detailsList__border {
+  font-size: 14px;
+  font-weight: 400;
+  text-wrap: nowrap;
 }
 </style>
