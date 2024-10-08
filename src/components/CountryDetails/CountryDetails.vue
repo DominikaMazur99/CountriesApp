@@ -35,7 +35,13 @@
         </div>
       </div>
       <div class="borders-section">
-        <span class="detailsList__border">Border Countries:</span>
+        <span
+          :class="[
+            'detailsList__border',
+            { detailsList__border__dark: darkMode },
+          ]"
+          >Border Countries:</span
+        >
         <div class="borders-buttons" v-if="borderCountries.length">
           <div v-for="border in borderCountries" :key="String(border)">
             <button
@@ -287,5 +293,8 @@ export default defineComponent({
   font-size: 14px;
   font-weight: 400;
   text-wrap: nowrap;
+}
+.detailsList__border__dark {
+  color: #ffffff;
 }
 </style>
