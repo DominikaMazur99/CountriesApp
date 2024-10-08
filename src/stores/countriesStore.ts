@@ -15,18 +15,15 @@ export const useCountriesStore = defineStore('countries', {
       if (this.countries.length > 0) return
 
       this.loading = true
-      console.log(this.loading)
       try {
         const response = await fetch(
           'https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,subregion,tld,currencies,languages,borders'
         )
-        const countries = (await response.json()) as Country[] // Cast the response as Country[]
-        console.log(countries)
+        const countries = (await response.json()) as Country[]
 
         const regions = [...new Set(countries.map((country) => country.region))]
         this.regions = regions
 
-        // Processing borders
         const borders = countries
           .filter((country) => country.borders && country.borders.length > 0)
           .flatMap((country) => country.borders)
@@ -59,7 +56,6 @@ export const useCountriesStore = defineStore('countries', {
         this.error = 'Failed to fetch countries'
       } finally {
         this.loading = false
-        console.log('koniec')
       }
     },
 
