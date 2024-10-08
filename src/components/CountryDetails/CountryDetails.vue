@@ -237,9 +237,8 @@ export default defineComponent({
 
 .border-button {
   display: inline-block;
-  padding: 8px 12px;
   border: 1px solid #dddddd;
-  border-radius: 5px;
+  border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   background-color: transparent;
