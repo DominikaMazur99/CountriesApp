@@ -30,7 +30,6 @@
 import router from '@/router'
 import { useCountriesStore } from '@/stores/countriesStore'
 import { defineComponent } from 'vue'
-import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'TopBar',
@@ -42,7 +41,6 @@ export default defineComponent({
   },
   setup() {
     const countriesStore = useCountriesStore()
-    const route = useRoute()
     const handleGoToMainPage = () => {
       router.push({ name: 'mainPage' })
       countriesStore.setSelectedCountry(null)
